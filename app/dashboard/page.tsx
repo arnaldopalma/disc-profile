@@ -21,6 +21,10 @@ import {
   TOTAL_POINTS,
 } from '@/lib/strengths-data'
 import type { StrengthDomain } from '@/lib/strengths-data'
+import { SCARF_DOMAINS, SCARF_ORDER, SCARF_TOTAL } from '@/lib/scarf-data'
+import type { ScarfDomain } from '@/lib/scarf-data'
+import { TEMPERAMENTS, TEMPERAMENT_ORDER, TEMP_TOTAL } from '@/lib/temperaments-data'
+import type { Temperament } from '@/lib/temperaments-data'
 
 interface Result {
   id: string
@@ -42,7 +46,25 @@ interface StrengthsResult {
   domain_scores: Record<StrengthDomain, number>
 }
 
-type Tab = 'disc' | 'strengths'
+interface ScarfResult {
+  id: string
+  name: string
+  email: string
+  created_at: string
+  scores: Record<ScarfDomain, number>
+  ranking: ScarfDomain[]
+}
+
+interface TempResult {
+  id: string
+  name: string
+  email: string
+  created_at: string
+  scores: Record<Temperament, number>
+  ranking: Temperament[]
+}
+
+type Tab = 'disc' | 'strengths' | 'scarf' | 'temperamentos'
 
 export default function DashboardPage() {
   const [password, setPassword] = useState('')
@@ -50,6 +72,8 @@ export default function DashboardPage() {
   const [authError, setAuthError] = useState('')
   const [results, setResults] = useState<Result[]>([])
   const [strengths, setStrengths] = useState<StrengthsResult[]>([])
+  const [scarf, setScarf] = useState<ScarfResult[]>([])
+  const [temps, setTemps] = useState<TempResult[]>([])
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState('')
   const [tab, setTab] = useState<Tab>('disc')
@@ -59,9 +83,12 @@ export default function DashboardPage() {
     setLoading(true)
     setAuthError('')
     try {
-      const [discRes, strRes] = await Promise.all([
-        fetch('/api/results', { headers: { 'x-dashboard-password': password } }),
-        fetch('/api/strengths/results', { headers: { 'x-dashboard-password': password } }),
+      const headers = { 'x-dashboard-password': password }
+      const [discRes, strRes, scarfRes, tempRes] = await Promise.all([
+        fetch('/api/results', { headers }),
+        fetch('/api/strengths/results', { headers }),
+        fetch('/api/scarf/results', { headers }),
+        fetch('/api/temperamentos/results', { headers }),
       ])
       if (discRes.status === 401) {
         setAuthError('Senha incorreta.')
@@ -69,10 +96,9 @@ export default function DashboardPage() {
       }
       const discData = await discRes.json()
       setResults(discData.results)
-      if (strRes.ok) {
-        const strData = await strRes.json()
-        setStrengths(strData.results ?? [])
-      }
+      if (strRes.ok) setStrengths((await strRes.json()).results ?? [])
+      if (scarfRes.ok) setScarf((await scarfRes.json()).results ?? [])
+      if (tempRes.ok) setTemps((await tempRes.json()).results ?? [])
       setAuthenticated(true)
     } catch {
       setAuthError('Erro ao conectar. Tente novamente.')
@@ -131,13 +157,18 @@ export default function DashboardPage() {
           <TabButton active={tab === 'strengths'} onClick={() => { setTab('strengths'); setFilter('') }}>
             Pontos Fortes <span className="text-xs opacity-60">({strengths.length})</span>
           </TabButton>
+          <TabButton active={tab === 'scarf'} onClick={() => { setTab('scarf'); setFilter('') }}>
+            SCARF <span className="text-xs opacity-60">({scarf.length})</span>
+          </TabButton>
+          <TabButton active={tab === 'temperamentos'} onClick={() => { setTab('temperamentos'); setFilter('') }}>
+            Temperamentos <span className="text-xs opacity-60">({temps.length})</span>
+          </TabButton>
         </div>
 
-        {tab === 'disc' ? (
-          <DiscView results={results} filter={filter} setFilter={setFilter} />
-        ) : (
-          <StrengthsView results={strengths} filter={filter} setFilter={setFilter} />
-        )}
+        {tab === 'disc' && <DiscView results={results} filter={filter} setFilter={setFilter} />}
+        {tab === 'strengths' && <StrengthsView results={strengths} filter={filter} setFilter={setFilter} />}
+        {tab === 'scarf' && <ScarfView results={scarf} filter={filter} setFilter={setFilter} />}
+        {tab === 'temperamentos' && <TemperamentsView results={temps} filter={filter} setFilter={setFilter} />}
       </div>
     </div>
   )
@@ -566,6 +597,200 @@ function StrengthsView({
           {filtered.length === 0 && (
             <div className="text-center py-12 text-gray-400">Nenhum resultado encontrado.</div>
           )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ───────────────────────── SCARF ───────────────────────── */
+
+function ScarfView({
+  results,
+  filter,
+  setFilter,
+}: {
+  results: ScarfResult[]
+  filter: string
+  setFilter: (v: string) => void
+}) {
+  const filtered = results.filter(
+    (r) =>
+      r.name.toLowerCase().includes(filter.toLowerCase()) ||
+      r.email.toLowerCase().includes(filter.toLowerCase())
+  )
+
+  const avg = SCARF_ORDER.map((d) => ({
+    key: d,
+    label: SCARF_DOMAINS[d].label,
+    color: SCARF_DOMAINS[d].color,
+    pct: results.length
+      ? Math.round(results.reduce((s, r) => s + ((r.scores?.[d] ?? 0) / SCARF_TOTAL) * 100, 0) / results.length)
+      : 0,
+  }))
+
+  return (
+    <div className="space-y-6">
+      <p className="text-gray-500 text-sm -mt-2">{results.length} respostas registradas</p>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {avg.map((d) => (
+          <div key={d.key} className="bg-white rounded-xl border shadow-sm p-4" style={{ borderLeftColor: d.color, borderLeftWidth: 4 }}>
+            <div className="text-2xl font-black" style={{ color: d.color }}>{d.pct}%</div>
+            <div className="text-sm font-medium text-gray-700 mt-0.5">{d.label}</div>
+            <div className="text-xs text-gray-400">peso médio no grupo</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white rounded-xl border shadow-sm p-4">
+        <input
+          type="text"
+          placeholder="Filtrar por nome ou e-mail..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+        />
+      </div>
+
+      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nome</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Domínios (maior → menor)</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Data</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Ver</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filtered.map((r) => {
+                const ranking = r.ranking ?? [...SCARF_ORDER].sort((a, b) => (r.scores?.[b] ?? 0) - (r.scores?.[a] ?? 0))
+                return (
+                  <tr key={r.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3 font-medium text-gray-900">{r.name}</td>
+                    <td className="px-4 py-3 text-gray-500">{r.email}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex gap-1 flex-wrap">
+                        {ranking.map((d) => {
+                          const m = SCARF_DOMAINS[d]
+                          return (
+                            <span key={d} className="text-xs font-semibold px-1.5 py-0.5 rounded" style={{ backgroundColor: m.color + '20', color: m.color }}>
+                              {m.label} {r.scores?.[d] ?? 0}
+                            </span>
+                          )
+                        })}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">{new Date(r.created_at).toLocaleDateString('pt-BR')}</td>
+                    <td className="px-4 py-3">
+                      <Link href={`/resultado-scarf/${r.id}`} className="text-indigo-600 hover:underline text-xs font-medium">Ver →</Link>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          {filtered.length === 0 && <div className="text-center py-12 text-gray-400">Nenhum resultado encontrado.</div>}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ───────────────────── TEMPERAMENTOS ───────────────────── */
+
+function TemperamentsView({
+  results,
+  filter,
+  setFilter,
+}: {
+  results: TempResult[]
+  filter: string
+  setFilter: (v: string) => void
+}) {
+  const filtered = results.filter(
+    (r) =>
+      r.name.toLowerCase().includes(filter.toLowerCase()) ||
+      r.email.toLowerCase().includes(filter.toLowerCase())
+  )
+
+  const avg = TEMPERAMENT_ORDER.map((t) => ({
+    key: t,
+    label: TEMPERAMENTS[t].label,
+    color: TEMPERAMENTS[t].color,
+    pct: results.length
+      ? Math.round(results.reduce((s, r) => s + ((r.scores?.[t] ?? 0) / TEMP_TOTAL) * 100, 0) / results.length)
+      : 0,
+  }))
+
+  return (
+    <div className="space-y-6">
+      <p className="text-gray-500 text-sm -mt-2">{results.length} respostas registradas</p>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {avg.map((t) => (
+          <div key={t.key} className="bg-white rounded-xl border shadow-sm p-4" style={{ borderLeftColor: t.color, borderLeftWidth: 4 }}>
+            <div className="text-2xl font-black" style={{ color: t.color }}>{t.pct}%</div>
+            <div className="text-sm font-medium text-gray-700 mt-0.5">{t.label}</div>
+            <div className="text-xs text-gray-400">média do grupo</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white rounded-xl border shadow-sm p-4">
+        <input
+          type="text"
+          placeholder="Filtrar por nome ou e-mail..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+        />
+      </div>
+
+      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nome</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Temperamentos (dominante → menor)</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Data</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Ver</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filtered.map((r) => {
+                const ranking = r.ranking ?? [...TEMPERAMENT_ORDER].sort((a, b) => (r.scores?.[b] ?? 0) - (r.scores?.[a] ?? 0))
+                return (
+                  <tr key={r.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3 font-medium text-gray-900">{r.name}</td>
+                    <td className="px-4 py-3 text-gray-500">{r.email}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex gap-1 flex-wrap">
+                        {ranking.map((t) => {
+                          const m = TEMPERAMENTS[t]
+                          return (
+                            <span key={t} className="text-xs font-semibold px-1.5 py-0.5 rounded" style={{ backgroundColor: m.color + '20', color: m.color }}>
+                              {m.label} {r.scores?.[t] ?? 0}
+                            </span>
+                          )
+                        })}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">{new Date(r.created_at).toLocaleDateString('pt-BR')}</td>
+                    <td className="px-4 py-3">
+                      <Link href={`/resultado-temperamentos/${r.id}`} className="text-indigo-600 hover:underline text-xs font-medium">Ver →</Link>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          {filtered.length === 0 && <div className="text-center py-12 text-gray-400">Nenhum resultado encontrado.</div>}
         </div>
       </div>
     </div>

@@ -1,0 +1,187 @@
+'use client'
+
+import { useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { SCARF_QUESTIONS } from '@/lib/scarf-data'
+import type { ScarfDomain, ScarfOption } from '@/lib/scarf-data'
+
+type Step = 'identify' | 'testing' | 'submitting'
+
+// Embaralhamento determinístico por índice (estável entre renders) para evitar viés de posição.
+function shuffled<T>(arr: T[], seed: number): T[] {
+  const out = [...arr]
+  let s = seed + 1
+  for (let i = out.length - 1; i > 0; i--) {
+    s = (s * 9301 + 49297) % 233280
+    const j = Math.floor((s / 233280) * (i + 1))
+    ;[out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
+
+export default function ScarfPage() {
+  const router = useRouter()
+  const [step, setStep] = useState<Step>('identify')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [index, setIndex] = useState(0)
+  const [answers, setAnswers] = useState<Record<string, ScarfDomain>>({})
+  const [error, setError] = useState('')
+
+  const total = SCARF_QUESTIONS.length
+
+  // ordem embaralhada das opções por pergunta (memoizada)
+  const optionOrders = useMemo<ScarfOption[][]>(
+    () => SCARF_QUESTIONS.map((q, i) => shuffled(q.options, i * 7 + 3)),
+    []
+  )
+
+  function handleIdentifySubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!name.trim() || !email.trim()) {
+      setError('Preencha todos os campos.')
+      return
+    }
+    setError('')
+    setStep('testing')
+  }
+
+  async function submit(finalAnswers: Record<string, ScarfDomain>) {
+    setStep('submitting')
+    try {
+      const res = await fetch('/api/scarf/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, answers: finalAnswers }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      router.push(`/resultado-scarf/${data.id}`)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao enviar. Tente novamente.')
+      setStep('testing')
+    }
+  }
+
+  function choose(domain: ScarfDomain) {
+    const next = { ...answers, [String(index)]: domain }
+    setAnswers(next)
+    if (index + 1 >= total) {
+      submit(next)
+    } else {
+      setIndex(index + 1)
+    }
+  }
+
+  if (step === 'identify') {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="bg-white rounded-2xl shadow-sm border p-8 w-full max-w-md space-y-6">
+          <div>
+            <Link href="/" className="text-sm text-indigo-600 hover:underline">← Início</Link>
+            <h1 className="text-2xl font-bold text-gray-900 mt-2">Teste SCARF</h1>
+            <p className="text-gray-500 mt-1">
+              Em cada situação, escolha a reação que mais se parece com a sua. Não existe resposta
+              certa ou errada — só as suas preferências atuais.
+            </p>
+          </div>
+          <form onSubmit={handleIdentifySubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Seu nome</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Nome completo"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Seu e-mail</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="seu@email.com"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors"
+            >
+              Começar o teste
+            </button>
+            <p className="text-center text-xs text-gray-400">{total} situações · cerca de 5 minutos</p>
+          </form>
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 'submitting') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-gray-600 font-medium">Apurando seus domínios...</p>
+        </div>
+      </div>
+    )
+  }
+
+  const question = SCARF_QUESTIONS[index]
+  const options = optionOrders[index]
+  const progress = Math.round((index / total) * 100)
+
+  return (
+    <div className="min-h-screen px-4 py-8">
+      <div className="max-w-2xl mx-auto space-y-6">
+        <div className="bg-white rounded-2xl border shadow-sm p-6">
+          <div className="flex justify-between text-xs text-gray-400 mb-1">
+            <span>{index + 1} de {total}</span>
+            <span>{progress}%</span>
+          </div>
+          <div className="w-full bg-gray-100 rounded-full h-2">
+            <div
+              className="bg-indigo-500 h-2 rounded-full transition-all"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl border shadow-sm p-6">
+          <p className="text-lg font-semibold text-gray-900 leading-relaxed">{question.text}</p>
+        </div>
+
+        <div className="grid gap-3">
+          {options.map((opt) => (
+            <button
+              key={opt.domain}
+              onClick={() => choose(opt.domain)}
+              className="group bg-white rounded-xl border-2 border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 shadow-sm px-5 py-4 text-left transition-all"
+            >
+              <span className="text-gray-800 group-hover:text-indigo-900 leading-relaxed">
+                {opt.text}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => index > 0 && setIndex(index - 1)}
+            disabled={index === 0}
+            className="text-sm text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            ← Voltar
+          </button>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <span className="text-xs text-gray-400">Escolha uma opção para avançar</span>
+        </div>
+      </div>
+    </div>
+  )
+}
