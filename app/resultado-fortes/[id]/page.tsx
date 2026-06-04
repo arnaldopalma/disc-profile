@@ -96,6 +96,18 @@ export default async function ResultadoFortesPage({
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed">{s.description}</p>
+                    {s.apply && (
+                      <p className="text-sm text-gray-700 leading-relaxed">
+                        <span className="font-semibold text-emerald-700">Como aplicar: </span>
+                        {s.apply}
+                      </p>
+                    )}
+                    {s.watch && (
+                      <p className="text-sm text-gray-700 leading-relaxed">
+                        <span className="font-semibold text-amber-700">Ponto de atenção: </span>
+                        {s.watch}
+                      </p>
+                    )}
                   </div>
                 </div>
               )

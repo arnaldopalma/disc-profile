@@ -25,6 +25,8 @@ export interface Strength {
   domain: StrengthDomain
   description: string
   statements: string[]
+  apply?: string
+  watch?: string
 }
 
 export const STRENGTHS: Strength[] = [
@@ -173,7 +175,7 @@ export const STRENGTHS: Strength[] = [
   },
   {
     id: 'excelencia',
-    name: 'Excelência',
+    name: 'Maximizador',
     domain: 'influencia',
     description:
       'Concentra-se nos pontos fortes para estimular a excelência. Busca transformar algo muito bom em algo soberbo.',
@@ -218,7 +220,7 @@ export const STRENGTHS: Strength[] = [
   },
   {
     id: 'auto-afirmacao',
-    name: 'Auto-afirmação',
+    name: 'Autoconfiança',
     domain: 'influencia',
     description:
       'Sente-se confiante para administrar a própria vida. Tem uma bússola interna que dá confiança em suas decisões.',
@@ -346,7 +348,7 @@ export const STRENGTHS: Strength[] = [
   },
   {
     id: 'ideativo',
-    name: 'Ideativo',
+    name: 'Ideação',
     domain: 'estrategico',
     description: 'É fascinado por ideias. Descobre conexões entre fenômenos aparentemente não relacionados.',
     statements: [
@@ -423,6 +425,154 @@ export const STRENGTHS: Strength[] = [
     ],
   },
 ]
+
+// Como aplicar (uso prático) e ponto de atenção (a "sombra" do talento) — por talento.
+const EXTRA: Record<string, { apply: string; watch: string }> = {
+  responsabilidade: {
+    apply: 'Assuma os compromissos visíveis e críticos — você vira a pessoa em quem todos confiam para entregar.',
+    watch: 'Aprenda a dizer "não": seu senso de dever pode te sobrecarregar.',
+  },
+  realizacao: {
+    apply: 'Defina metas diárias concretas; sua energia rende mais com uma lista para vencer.',
+    watch: 'Nem tudo precisa de produtividade — reserve tempo para descansar sem culpa.',
+  },
+  foco: {
+    apply: 'Use sua clareza de prioridades para manter equipes no rumo e cortar distrações.',
+    watch: 'Cuidado com a rigidez: às vezes vale ouvir desvios que trazem boas ideias.',
+  },
+  prudencia: {
+    apply: 'Coloque-se onde decisões exigem cautela e avaliação de risco.',
+    watch: 'Não deixe a análise virar paralisia; nem toda escolha pede tanta deliberação.',
+  },
+  imparcialidade: {
+    apply: 'Crie regras e processos claros que garantam tratamento justo a todos.',
+    watch: 'Pessoas e situações têm exceções legítimas — flexibilize quando for justo.',
+  },
+  crenca: {
+    apply: 'Busque trabalho alinhado aos seus valores; é onde você dá o seu melhor.',
+    watch: 'Lembre-se de que outros têm valores diferentes, igualmente válidos.',
+  },
+  organizacao: {
+    apply: 'Assuma projetos com muitas variáveis — você brilha coordenando pessoas e recursos.',
+    watch: 'Nem todos acompanham seu ritmo de rearranjo; comunique as mudanças.',
+  },
+  disciplina: {
+    apply: 'Estruture rotinas e prazos; você entrega com consistência onde há ordem.',
+    watch: 'Ambientes caóticos te incomodam — desenvolva tolerância ao imprevisto.',
+  },
+  restauracao: {
+    apply: 'Vá para onde há problemas a resolver; você energiza ao consertar o que travou.',
+    watch: 'Não foque só no que está errado — reconheça também o que já vai bem.',
+  },
+  comando: {
+    apply: 'Busque papéis que exijam decisões firmes e clareza sob pressão.',
+    watch: 'Sua franqueza pode intimidar — calibre o tom com quem é mais sensível.',
+  },
+  competicao: {
+    apply: 'Procure ambientes com placar e metas; a comparação te impulsiona.',
+    watch: 'Nem tudo é competição; cuide para não desvalorizar quem coopera.',
+  },
+  significancia: {
+    apply: 'Persiga projetos de impacto visível e que deixem a sua marca.',
+    watch: 'Reconhecimento externo é bom, mas não deixe ele definir o seu valor.',
+  },
+  excelencia: {
+    apply: 'Invista no que já é bom para torná-lo excepcional, em vez de só consertar fraquezas.',
+    watch: 'Padrões altos podem frustrar — aceite que nem tudo precisa ser soberbo.',
+  },
+  comunicacao: {
+    apply: 'Assuma apresentações, narrativas e o papel de dar voz às ideias do grupo.',
+    watch: 'Ouça tanto quanto fala; deixe espaço para os mais quietos.',
+  },
+  ativacao: {
+    apply: 'Seja o motor que tira ideias do papel e cria movimento.',
+    watch: 'Pressa demais gera erros; às vezes vale planejar antes de agir.',
+  },
+  carisma: {
+    apply: 'Use sua facilidade social para abrir portas e conectar pessoas novas.',
+    watch: 'Aprofunde alguns laços — nem toda relação precisa ser ampla e rápida.',
+  },
+  'auto-afirmacao': {
+    apply: 'Confie no seu julgamento em decisões incertas; sua segurança acalma o grupo.',
+    watch: 'Excesso de confiança fecha ouvidos — busque dados e opiniões contrárias.',
+  },
+  relacionamento: {
+    apply: 'Invista em poucas relações profundas; é onde você gera mais valor.',
+    watch: 'Abra espaço para novas pessoas além do seu círculo próximo.',
+  },
+  individualizacao: {
+    apply: 'Monte times aproveitando o que cada pessoa tem de único.',
+    watch: 'Cuidado para não criar exceções demais que confundam o grupo.',
+  },
+  empatia: {
+    apply: 'Use sua leitura emocional para mediar conflitos e dar feedback humano.',
+    watch: 'Não absorva as emoções dos outros a ponto de se esgotar.',
+  },
+  adaptabilidade: {
+    apply: 'Vá para ambientes dinâmicos onde reagir bem ao imprevisto é valioso.',
+    watch: 'Estruture algumas metas de longo prazo; viver só o agora pode dispersar.',
+  },
+  conexao: {
+    apply: 'Ajude o time a enxergar o propósito maior por trás das tarefas.',
+    watch: 'Nem tudo tem um significado oculto — alguns fatos são só acaso.',
+  },
+  desenvolvimento: {
+    apply: 'Assuma mentoria e formação de pessoas; você floresce vendo os outros crescer.',
+    watch: 'Invista onde há real potencial; nem todos querem ser desenvolvidos.',
+  },
+  positivo: {
+    apply: 'Leve energia e ânimo aos times, especialmente em momentos difíceis.',
+    watch: 'Reconheça os problemas reais; otimismo não pode virar negação.',
+  },
+  inclusao: {
+    apply: 'Garanta que ninguém fique de fora — você cria pertencimento.',
+    watch: 'Incluir todos pode atrasar decisões; saiba quando fechar o grupo.',
+  },
+  harmonia: {
+    apply: 'Atue como ponte para gerar consenso e reduzir atritos.',
+    watch: 'Evitar todo conflito esconde divergências úteis; deixe-as aparecer.',
+  },
+  'pensamento-estrategico': {
+    apply: 'Seja chamado para traçar caminhos e antecipar cenários.',
+    watch: 'Comunique o raciocínio; o que é óbvio para você não é para os outros.',
+  },
+  ideativo: {
+    apply: 'Gere opções e conexões novas em sessões de brainstorm.',
+    watch: 'Nem toda ideia precisa virar projeto; ajude a priorizar e executar.',
+  },
+  input: {
+    apply: 'Vire a fonte de informação e referência do time.',
+    watch: 'Coletar não basta — transforme conhecimento em ação.',
+  },
+  inteleccao: {
+    apply: 'Reserve tempo para pensar a fundo antes de decidir.',
+    watch: 'Não fique só na reflexão; converta o pensamento em entrega.',
+  },
+  futurista: {
+    apply: 'Inspire as pessoas pintando aonde podemos chegar.',
+    watch: 'Conecte a visão ao presente; futuro sem passos vira só sonho.',
+  },
+  analitico: {
+    apply: 'Seja a checagem de realidade do time, com dados e causas.',
+    watch: 'Excesso de análise pode travar; nem tudo exige prova completa.',
+  },
+  estudioso: {
+    apply: 'Busque papéis com aprendizado contínuo e novos domínios.',
+    watch: 'Aprender não é o fim — aplique o que você estuda.',
+  },
+  contexto: {
+    apply: 'Use a história e os precedentes para iluminar decisões atuais.',
+    watch: 'O passado informa, mas não engessa; o contexto muda.',
+  },
+}
+
+for (const s of STRENGTHS) {
+  const e = EXTRA[s.id]
+  if (e) {
+    s.apply = e.apply
+    s.watch = e.watch
+  }
+}
 
 export const STRENGTH_BY_ID: Record<string, Strength> = Object.fromEntries(
   STRENGTHS.map((s) => [s.id, s])
