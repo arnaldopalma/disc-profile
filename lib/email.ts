@@ -2,7 +2,7 @@ import { PROFILE_DESCRIPTIONS, DISC_COLORS, DISC_LABELS, scoreToPercent } from '
 import type { DiscType, DiscScores } from './disc-data'
 
 const FROM = process.env.RESEND_FROM ?? 'Perfil DISC <onboarding@resend.dev>'
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://disc-profile-sigma.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://consciencia-autoconhecimento.vercel.app'
 
 function scoreBar(type: DiscType, scores: DiscScores): string {
   const pct = scoreToPercent(scores[type])
@@ -122,7 +122,7 @@ function buildHtml(params: {
             <td style="background:#f3f4f6;border-radius:0 0 16px 16px;padding:20px 32px;text-align:center;">
               <p style="margin:0;font-size:12px;color:#9ca3af;">
                 Você recebeu este e-mail porque concluiu o teste DISC.<br>
-                <a href="${BASE_URL}" style="color:#1d4ed8;text-decoration:none;">disc-profile-sigma.vercel.app</a>
+                <a href="${BASE_URL}" style="color:#1d4ed8;text-decoration:none;">consciencia-autoconhecimento.vercel.app</a>
               </p>
             </td>
           </tr>

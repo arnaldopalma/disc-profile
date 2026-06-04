@@ -2,7 +2,7 @@
 // Faz no-op se RESEND_API_KEY não estiver configurada (não quebra a submissão).
 
 const FROM = process.env.RESEND_FROM ?? 'Autoconhecimento <onboarding@resend.dev>'
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://disc-profile-sigma.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://consciencia-autoconhecimento.vercel.app'
 
 export interface EmailRow {
   label: string
@@ -80,7 +80,7 @@ function buildHtml(params: {
           <td style="background:#f3f4f6;border-radius:0 0 16px 16px;padding:20px 32px;text-align:center;">
             <p style="margin:0;font-size:12px;color:#9ca3af;">
               Você recebeu este e-mail porque concluiu o teste ${testName}.<br>
-              <a href="${BASE_URL}" style="color:#1d4ed8;text-decoration:none;">disc-profile-sigma.vercel.app</a>
+              <a href="${BASE_URL}" style="color:#1d4ed8;text-decoration:none;">consciencia-autoconhecimento.vercel.app</a>
             </p>
           </td>
         </tr>

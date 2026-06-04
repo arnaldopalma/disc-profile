@@ -151,7 +151,7 @@ export default async function ResultadoFortesPage({
           <p className="font-semibold text-gray-800">Compartilhe seu resultado</p>
           <p className="text-sm text-gray-500">Guarde ou envie este link para consultar depois</p>
           <div className="bg-white border rounded-xl px-4 py-3 text-sm text-gray-600 font-mono break-all">
-            {`https://disc-profile-sigma.vercel.app/resultado-fortes/${id}`}
+            {`https://consciencia-autoconhecimento.vercel.app/resultado-fortes/${id}`}
           </div>
           <div>
             <Link href="/" className="text-sm text-blue-600 hover:underline font-medium">
