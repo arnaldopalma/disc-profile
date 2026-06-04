@@ -10,6 +10,7 @@ import {
 } from '@/lib/disc-data'
 import type { DiscType } from '@/lib/disc-data'
 import DiscChart from '@/components/DiscChart'
+import PdfExportButton from '@/components/PdfExportButton'
 
 export default async function ResultadoPage({
   params,
@@ -40,7 +41,7 @@ export default async function ResultadoPage({
 
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-50">
-      <div className="max-w-3xl mx-auto space-y-6">
+      <div id="result-content" className="max-w-3xl mx-auto space-y-6">
         {/* Header */}
         <div className="bg-white rounded-2xl border shadow-sm p-6">
           <div className="flex items-start justify-between gap-4">
@@ -51,12 +52,15 @@ export default async function ResultadoPage({
               </h1>
               <p className="text-gray-500 text-sm mt-0.5">{data.email}</p>
             </div>
-            <Link
-              href="/teste"
-              className="shrink-0 text-sm text-indigo-600 hover:underline font-medium"
-            >
-              Fazer novamente
-            </Link>
+            <div className="flex items-center gap-2" data-pdf-exclude>
+              <PdfExportButton name={data.name} />
+              <Link
+                href="/teste"
+                className="shrink-0 text-sm text-indigo-600 hover:underline font-medium"
+              >
+                Fazer novamente
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -163,7 +167,7 @@ export default async function ResultadoPage({
         </div>
 
         {/* Share */}
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center space-y-3">
+        <div data-pdf-exclude className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center space-y-3">
           <p className="font-semibold text-gray-800">Compartilhe seu perfil</p>
           <p className="text-sm text-gray-500">Guarde ou envie este link para consultar depois</p>
           <div className="bg-white border rounded-xl px-4 py-3 text-sm text-gray-600 font-mono break-all">
