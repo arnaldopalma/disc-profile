@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { calculateScores, determineProfile } from '@/lib/disc-data'
+import { sendResultEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,6 +36,15 @@ export async function POST(request: NextRequest) {
       console.error('Supabase error:', error)
       return NextResponse.json({ error: 'Erro ao salvar resultado' }, { status: 500 })
     }
+
+    sendResultEmail({
+      name,
+      email,
+      naturalProfile,
+      adaptedProfile,
+      naturalScores,
+      resultId: data.id,
+    }).catch((err) => console.error('Email error:', err))
 
     return NextResponse.json({ id: data.id })
   } catch (err) {
