@@ -10,7 +10,7 @@ Dashboard: /dashboard (senha: disc2026)
 
 ### Alta prioridade
 - [ ] **Exportar resultado em PDF** — botão na página de resultado que gera um PDF com o perfil completo (gráfico + descrição + dicas de comunicação)
-- [ ] **Enviar resultado por e-mail** — após completar o teste, enviar o link do resultado para o e-mail informado (usar Resend ou SendGrid)
+- [ ] **Enviar resultado por e-mail** — código implementado (lib/email.ts + Resend); falta criar conta em resend.com, gerar API key e rodar `vercel env add RESEND_API_KEY production` (plano gratuito: 3.000 e-mails/mês)
 - [ ] **Campo "Empresa" no cadastro** — adicionar empresa/organização no formulário inicial e no dashboard
 
 ### Melhorias de UX
