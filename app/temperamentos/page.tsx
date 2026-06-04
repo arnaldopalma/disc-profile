@@ -24,6 +24,7 @@ export default function TemperamentosPage() {
   const [step, setStep] = useState<Step>('identify')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<string, Temperament>>({})
   const [error, setError] = useState('')
@@ -38,7 +39,7 @@ export default function TemperamentosPage() {
 
   function handleIdentifySubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!name.trim() || !email.trim()) {
+    if (!name.trim() || !email.trim() || !phone.trim()) {
       setError('Preencha todos os campos.')
       return
     }
@@ -52,7 +53,7 @@ export default function TemperamentosPage() {
       const res = await fetch('/api/temperamentos/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, answers: finalAnswers }),
+        body: JSON.stringify({ name, email, phone, answers: finalAnswers }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
@@ -103,6 +104,16 @@ export default function TemperamentosPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Seu telefone</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="(11) 99999-9999"
                 className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>

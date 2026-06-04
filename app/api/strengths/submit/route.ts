@@ -9,7 +9,7 @@ import {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, answers } = body
+    const { name, email, phone, answers } = body
 
     if (!name || !email || !answers || typeof answers !== 'object') {
       return NextResponse.json({ error: 'Campos obrigatórios faltando' }, { status: 400 })
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
       .insert({
         name,
         email,
+        phone: phone ?? null,
         answers,
         scores,
         top5,

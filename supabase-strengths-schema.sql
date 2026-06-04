@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS strengths_responses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   email TEXT NOT NULL,
+  phone TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   answers JSONB NOT NULL,        -- { "<indice do par>": "<id do talento escolhido>" }
   scores JSONB NOT NULL,         -- { "<id do talento>": <pontos> }

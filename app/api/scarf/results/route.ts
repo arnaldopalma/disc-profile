@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
   const { data, error } = await supabase
     .from('scarf_responses')
-    .select('id, name, email, created_at, scores, ranking')
+    .select('id, name, email, phone, created_at, scores, ranking')
     .order('created_at', { ascending: false })
 
   if (error) {

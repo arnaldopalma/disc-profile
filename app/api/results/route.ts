@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
   const { data, error } = await supabase
     .from('responses')
-    .select('id, name, email, created_at, natural_scores, adapted_scores, natural_profile, adapted_profile')
+    .select('id, name, email, phone, created_at, natural_scores, adapted_scores, natural_profile, adapted_profile')
     .order('created_at', { ascending: false })
 
   if (error) {

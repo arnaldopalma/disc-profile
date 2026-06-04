@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS scarf_responses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   email TEXT NOT NULL,
+  phone TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   answers JSONB NOT NULL,   -- { "<indice da pergunta>": "<dominio escolhido>" }
   scores JSONB NOT NULL,    -- { status, certeza, autonomia, relacionamento, justica }

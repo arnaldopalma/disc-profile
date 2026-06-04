@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS responses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   email TEXT NOT NULL,
+  phone TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   natural_answers JSONB NOT NULL,
   adapted_answers JSONB NOT NULL,

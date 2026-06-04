@@ -6,7 +6,7 @@ import { sendResultEmail } from '@/lib/email'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, naturalAnswers, adaptedAnswers } = body
+    const { name, email, phone, naturalAnswers, adaptedAnswers } = body
 
     if (!name || !email || !naturalAnswers || !adaptedAnswers) {
       return NextResponse.json({ error: 'Campos obrigatórios faltando' }, { status: 400 })
@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
       .insert({
         name,
         email,
+        phone: phone ?? null,
         natural_answers: naturalAnswers,
         adapted_answers: adaptedAnswers,
         natural_scores: naturalScores,

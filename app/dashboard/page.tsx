@@ -30,6 +30,7 @@ interface Result {
   id: string
   name: string
   email: string
+  phone?: string
   created_at: string
   natural_scores: Record<string, number>
   adapted_scores: Record<string, number>
@@ -41,6 +42,7 @@ interface StrengthsResult {
   id: string
   name: string
   email: string
+  phone?: string
   created_at: string
   top5: string[]
   domain_scores: Record<StrengthDomain, number>
@@ -50,6 +52,7 @@ interface ScarfResult {
   id: string
   name: string
   email: string
+  phone?: string
   created_at: string
   scores: Record<ScarfDomain, number>
   ranking: ScarfDomain[]
@@ -59,6 +62,7 @@ interface TempResult {
   id: string
   name: string
   email: string
+  phone?: string
   created_at: string
   scores: Record<Temperament, number>
   ranking: Temperament[]
@@ -345,6 +349,7 @@ function DiscView({
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nome</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Telefone</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Perfil Natural</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Perfil Adaptado</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">D / I / S / C</th>
@@ -359,6 +364,7 @@ function DiscView({
                   <tr key={r.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3 font-medium text-gray-900">{r.name}</td>
                     <td className="px-4 py-3 text-gray-500">{r.email}</td>
+                    <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{r.phone ?? '—'}</td>
                     <td className="px-4 py-3"><ProfileBadge profile={r.natural_profile} /></td>
                     <td className="px-4 py-3"><ProfileBadge profile={r.adapted_profile} /></td>
                     <td className="px-4 py-3">
@@ -554,6 +560,7 @@ function StrengthsView({
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nome</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Telefone</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Top 5 talentos</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Data</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Ver</th>
@@ -660,6 +667,7 @@ function ScarfView({
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nome</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Telefone</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Domínios (maior → menor)</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Data</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Ver</th>
@@ -672,6 +680,7 @@ function ScarfView({
                   <tr key={r.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3 font-medium text-gray-900">{r.name}</td>
                     <td className="px-4 py-3 text-gray-500">{r.email}</td>
+                    <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{r.phone ?? '—'}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1 flex-wrap">
                         {ranking.map((d) => {
@@ -757,6 +766,7 @@ function TemperamentsView({
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nome</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">E-mail</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Telefone</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Temperamentos (dominante → menor)</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Data</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Ver</th>
@@ -769,6 +779,7 @@ function TemperamentsView({
                   <tr key={r.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3 font-medium text-gray-900">{r.name}</td>
                     <td className="px-4 py-3 text-gray-500">{r.email}</td>
+                    <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{r.phone ?? '—'}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1 flex-wrap">
                         {ranking.map((t) => {
