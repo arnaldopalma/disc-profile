@@ -4,7 +4,10 @@ import {
   calculateStrengthScores,
   getTop5,
   getDomainScores,
+  STRENGTH_BY_ID,
+  DOMAINS,
 } from '@/lib/strengths-data'
+import { sendGenericResultEmail } from '@/lib/email-generic'
 
 export async function POST(request: NextRequest) {
   try {
@@ -37,6 +40,25 @@ export async function POST(request: NextRequest) {
       console.error('Supabase error:', error)
       return NextResponse.json({ error: 'Erro ao salvar resultado' }, { status: 500 })
     }
+
+    sendGenericResultEmail({
+      to: email,
+      subject: 'Seus 5 pontos fortes dominantes',
+      name,
+      badge: 'Resultado · Pontos Fortes',
+      heading: 'Seus 5 talentos dominantes',
+      rows: top5.map((sid, i) => {
+        const s = STRENGTH_BY_ID[sid]
+        return {
+          label: `${i + 1}. ${s?.name ?? sid}`,
+          sub: s ? DOMAINS[s.domain].short : undefined,
+          color: s ? DOMAINS[s.domain].color : '#1d4ed8',
+        }
+      }),
+      resultPath: 'resultado-fortes',
+      resultId: data.id,
+      testName: 'de Pontos Fortes',
+    }).catch((err) => console.error('Email error:', err))
 
     return NextResponse.json({ id: data.id })
   } catch (err) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
-import { calculateScarfScores, rankScarf } from '@/lib/scarf-data'
+import { calculateScarfScores, rankScarf, SCARF_DOMAINS, SCARF_TOTAL } from '@/lib/scarf-data'
+import { sendGenericResultEmail } from '@/lib/email-generic'
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,6 +32,27 @@ export async function POST(request: NextRequest) {
       console.error('Supabase error:', error)
       return NextResponse.json({ error: 'Erro ao salvar resultado' }, { status: 500 })
     }
+
+    const topDomain = SCARF_DOMAINS[ranking[0]]
+    sendGenericResultEmail({
+      to: email,
+      subject: `Seu perfil SCARF: ${topDomain.label} é o que mais te move`,
+      name,
+      badge: 'Resultado · SCARF',
+      heading: 'Seus domínios, do que mais ao que menos te afeta',
+      rows: ranking.map((d) => {
+        const m = SCARF_DOMAINS[d]
+        return {
+          label: m.label,
+          sub: m.summary,
+          value: `${scores[d]}/${SCARF_TOTAL}`,
+          color: m.color,
+        }
+      }),
+      resultPath: 'resultado-scarf',
+      resultId: data.id,
+      testName: 'SCARF',
+    }).catch((err) => console.error('Email error:', err))
 
     return NextResponse.json({ id: data.id })
   } catch (err) {

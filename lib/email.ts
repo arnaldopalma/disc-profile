@@ -56,8 +56,8 @@ function buildHtml(params: {
 
           <!-- Header -->
           <tr>
-            <td style="background:#4f46e5;border-radius:16px 16px 0 0;padding:32px 32px 24px;text-align:center;">
-              <p style="margin:0 0 4px;font-size:12px;font-weight:600;letter-spacing:2px;color:#c7d2fe;text-transform:uppercase;">Resultado DISC</p>
+            <td style="background:#1d4ed8;border-radius:16px 16px 0 0;padding:32px 32px 24px;text-align:center;">
+              <p style="margin:0 0 4px;font-size:12px;font-weight:600;letter-spacing:2px;color:#bfdbfe;text-transform:uppercase;">Resultado DISC</p>
               <h1 style="margin:0;font-size:24px;font-weight:800;color:#ffffff;">Perfil de ${name}</h1>
             </td>
           </tr>
@@ -110,7 +110,7 @@ function buildHtml(params: {
           <!-- CTA -->
           <tr>
             <td style="background:#ffffff;${showAdapted ? '' : 'border-top:1px solid #f3f4f6;'}padding:24px 32px;text-align:center;">
-              <a href="${resultUrl}" style="display:inline-block;background:#4f46e5;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;padding:14px 32px;border-radius:12px;">
+              <a href="${resultUrl}" style="display:inline-block;background:#1d4ed8;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;padding:14px 32px;border-radius:12px;">
                 Ver resultado completo →
               </a>
               <p style="margin:12px 0 0;font-size:12px;color:#9ca3af;">Gráfico, dicas de comunicação e mais detalhes no link acima.</p>
@@ -122,7 +122,7 @@ function buildHtml(params: {
             <td style="background:#f3f4f6;border-radius:0 0 16px 16px;padding:20px 32px;text-align:center;">
               <p style="margin:0;font-size:12px;color:#9ca3af;">
                 Você recebeu este e-mail porque concluiu o teste DISC.<br>
-                <a href="${BASE_URL}" style="color:#6366f1;text-decoration:none;">disc-profile-sigma.vercel.app</a>
+                <a href="${BASE_URL}" style="color:#1d4ed8;text-decoration:none;">disc-profile-sigma.vercel.app</a>
               </p>
             </td>
           </tr>
