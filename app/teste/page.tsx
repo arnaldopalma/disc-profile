@@ -199,8 +199,11 @@ export default function TestePage() {
                   handleSubmit()
                 }
               }}
-              disabled={!canContinue}
-              className="ml-auto bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-200 disabled:text-gray-400 text-white font-semibold px-8 py-3 rounded-xl transition-colors"
+              className={`ml-auto font-semibold px-8 py-3 rounded-xl transition-colors ${
+                canContinue
+                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
             >
               {isNatural ? 'Próxima parte →' : 'Ver meu resultado →'}
             </button>
