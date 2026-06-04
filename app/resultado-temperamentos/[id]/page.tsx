@@ -56,7 +56,7 @@ export default async function ResultadoTemperamentosPage({
               </h1>
               <p className="text-gray-500 text-sm mt-0.5">{data.email}</p>
             </div>
-            <Link href="/temperamentos" className="shrink-0 text-sm text-indigo-600 hover:underline font-medium">
+            <Link href="/temperamentos" className="shrink-0 text-sm text-blue-600 hover:underline font-medium">
               Fazer novamente
             </Link>
           </div>
@@ -145,12 +145,12 @@ export default async function ResultadoTemperamentosPage({
         </div>
 
         {/* Share */}
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center space-y-3">
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center space-y-3">
           <p className="font-semibold text-gray-800">Compartilhe seu resultado</p>
           <div className="bg-white border rounded-xl px-4 py-3 text-sm text-gray-600 font-mono break-all">
             {`https://disc-profile-sigma.vercel.app/resultado-temperamentos/${id}`}
           </div>
-          <Link href="/" className="text-sm text-indigo-600 hover:underline font-medium">
+          <Link href="/" className="text-sm text-blue-600 hover:underline font-medium">
             ← Voltar para a página inicial
           </Link>
         </div>

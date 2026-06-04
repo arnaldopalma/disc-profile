@@ -121,13 +121,13 @@ export default function DashboardPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Senha do dashboard"
-              className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {authError && <p className="text-red-500 text-sm">{authError}</p>}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-colors"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-colors"
             >
               {loading ? 'Carregando...' : 'Entrar'}
             </button>
@@ -146,7 +146,7 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
             <p className="text-gray-500 text-sm">Consciência &amp; Autoconhecimento</p>
           </div>
-          <Link href="/" className="text-sm text-indigo-600 hover:underline">← Home</Link>
+          <Link href="/" className="text-sm text-blue-600 hover:underline">← Home</Link>
         </div>
 
         {/* Tabs */}
@@ -188,7 +188,7 @@ function TabButton({
       onClick={onClick}
       className={`px-4 py-2.5 text-sm font-semibold border-b-2 -mb-px transition-colors ${
         active
-          ? 'border-indigo-600 text-indigo-600'
+          ? 'border-blue-600 text-blue-600'
           : 'border-transparent text-gray-500 hover:text-gray-800'
       }`}
     >
@@ -334,7 +334,7 @@ function DiscView({
           placeholder="Filtrar por nome, e-mail ou perfil..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
         />
       </div>
 
@@ -378,7 +378,7 @@ function DiscView({
                       {new Date(r.created_at).toLocaleDateString('pt-BR')}
                     </td>
                     <td className="px-4 py-3">
-                      <Link href={`/resultado/${r.id}`} className="text-indigo-600 hover:underline text-xs font-medium">
+                      <Link href={`/resultado/${r.id}`} className="text-blue-600 hover:underline text-xs font-medium">
                         Ver →
                       </Link>
                     </td>
@@ -543,7 +543,7 @@ function StrengthsView({
           placeholder="Filtrar por nome, e-mail ou talento..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
         />
       </div>
 
@@ -586,7 +586,7 @@ function StrengthsView({
                     {new Date(r.created_at).toLocaleDateString('pt-BR')}
                   </td>
                   <td className="px-4 py-3">
-                    <Link href={`/resultado-fortes/${r.id}`} className="text-indigo-600 hover:underline text-xs font-medium">
+                    <Link href={`/resultado-fortes/${r.id}`} className="text-blue-600 hover:underline text-xs font-medium">
                       Ver →
                     </Link>
                   </td>
@@ -649,7 +649,7 @@ function ScarfView({
           placeholder="Filtrar por nome ou e-mail..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
         />
       </div>
 
@@ -686,7 +686,7 @@ function ScarfView({
                     </td>
                     <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">{new Date(r.created_at).toLocaleDateString('pt-BR')}</td>
                     <td className="px-4 py-3">
-                      <Link href={`/resultado-scarf/${r.id}`} className="text-indigo-600 hover:underline text-xs font-medium">Ver →</Link>
+                      <Link href={`/resultado-scarf/${r.id}`} className="text-blue-600 hover:underline text-xs font-medium">Ver →</Link>
                     </td>
                   </tr>
                 )
@@ -746,7 +746,7 @@ function TemperamentsView({
           placeholder="Filtrar por nome ou e-mail..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+          className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
         />
       </div>
 
@@ -783,7 +783,7 @@ function TemperamentsView({
                     </td>
                     <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">{new Date(r.created_at).toLocaleDateString('pt-BR')}</td>
                     <td className="px-4 py-3">
-                      <Link href={`/resultado-temperamentos/${r.id}`} className="text-indigo-600 hover:underline text-xs font-medium">Ver →</Link>
+                      <Link href={`/resultado-temperamentos/${r.id}`} className="text-blue-600 hover:underline text-xs font-medium">Ver →</Link>
                     </td>
                   </tr>
                 )

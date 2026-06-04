@@ -69,7 +69,7 @@ export default function TestePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nome completo"
-                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
             <div>
@@ -79,13 +79,13 @@ export default function TestePage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
-                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors"
             >
               Começar o teste
             </button>
@@ -99,7 +99,7 @@ export default function TestePage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-gray-600 font-medium">Calculando seu perfil...</p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function TestePage() {
         <div className="bg-white rounded-2xl border shadow-sm p-6">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <span className="text-sm font-medium text-indigo-600 uppercase tracking-wide">
+              <span className="text-sm font-medium text-blue-600 uppercase tracking-wide">
                 {isNatural ? 'Parte 1 de 2' : 'Parte 2 de 2'}
               </span>
               <h2 className="text-xl font-bold text-gray-900 mt-0.5">
@@ -140,7 +140,7 @@ export default function TestePage() {
             </div>
             <div className="w-full bg-gray-100 rounded-full h-2">
               <div
-                className="bg-indigo-500 h-2 rounded-full transition-all"
+                className="bg-blue-500 h-2 rounded-full transition-all"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -164,8 +164,8 @@ export default function TestePage() {
                       title={RATING_LABELS[v]}
                       className={`w-10 h-10 rounded-lg font-bold text-sm transition-all border-2 ${
                         val === v
-                          ? 'bg-indigo-600 text-white border-indigo-600 scale-110'
-                          : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50'
+                          ? 'bg-blue-600 text-white border-blue-600 scale-110'
+                          : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
                       }`}
                     >
                       {v}
@@ -201,7 +201,7 @@ export default function TestePage() {
               }}
               className={`ml-auto font-semibold px-8 py-3 rounded-xl transition-colors ${
                 canContinue
-                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer'
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >

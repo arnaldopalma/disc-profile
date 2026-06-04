@@ -78,7 +78,7 @@ export default function TemperamentosPage() {
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="bg-white rounded-2xl shadow-sm border p-8 w-full max-w-md space-y-6">
           <div>
-            <Link href="/" className="text-sm text-indigo-600 hover:underline">← Início</Link>
+            <Link href="/" className="text-sm text-blue-600 hover:underline">← Início</Link>
             <h1 className="text-2xl font-bold text-gray-900 mt-2">Teste de Temperamentos</h1>
             <p className="text-gray-500 mt-1">
               Em cada linha, escolha a palavra que <strong>mais combina com você</strong>. São 40 linhas
@@ -93,7 +93,7 @@ export default function TemperamentosPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nome completo"
-                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
             <div>
@@ -103,13 +103,13 @@ export default function TemperamentosPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
-                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors"
             >
               Começar o teste
             </button>
@@ -124,7 +124,7 @@ export default function TemperamentosPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-gray-600 font-medium">Apurando seu temperamento...</p>
         </div>
       </div>
@@ -147,13 +147,13 @@ export default function TemperamentosPage() {
           </div>
           <div className="w-full bg-gray-100 rounded-full h-2">
             <div
-              className="bg-indigo-500 h-2 rounded-full transition-all"
+              className="bg-blue-500 h-2 rounded-full transition-all"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
 
-        <p className="text-center text-sm font-medium text-indigo-600 uppercase tracking-wide">
+        <p className="text-center text-sm font-medium text-blue-600 uppercase tracking-wide">
           Qual palavra mais combina com você?
         </p>
 
@@ -162,9 +162,9 @@ export default function TemperamentosPage() {
             <button
               key={t}
               onClick={() => choose(t)}
-              className="group bg-white rounded-xl border-2 border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 shadow-sm px-4 py-6 text-center transition-all"
+              className="group bg-white rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 shadow-sm px-4 py-6 text-center transition-all"
             >
-              <span className="text-lg font-medium text-gray-800 group-hover:text-indigo-900">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-blue-900">
                 {rowData.words[t]}
               </span>
             </button>

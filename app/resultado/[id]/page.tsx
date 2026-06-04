@@ -56,7 +56,7 @@ export default async function ResultadoPage({
               <PdfExportButton name={data.name} />
               <Link
                 href="/teste"
-                className="shrink-0 text-sm text-indigo-600 hover:underline font-medium"
+                className="shrink-0 text-sm text-blue-600 hover:underline font-medium"
               >
                 Fazer novamente
               </Link>
@@ -95,7 +95,7 @@ export default async function ResultadoPage({
             <div className="space-y-3 text-sm text-gray-700 leading-relaxed">
               <p>{natProfile.summary}</p>
               <details className="group">
-                <summary className="cursor-pointer text-indigo-600 font-medium list-none flex items-center gap-1">
+                <summary className="cursor-pointer text-blue-600 font-medium list-none flex items-center gap-1">
                   <span className="group-open:hidden">+ Ver mais detalhes</span>
                   <span className="hidden group-open:inline">- Menos detalhes</span>
                 </summary>
@@ -167,7 +167,7 @@ export default async function ResultadoPage({
         </div>
 
         {/* Share */}
-        <div data-pdf-exclude className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center space-y-3">
+        <div data-pdf-exclude className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center space-y-3">
           <p className="font-semibold text-gray-800">Compartilhe seu perfil</p>
           <p className="text-sm text-gray-500">Guarde ou envie este link para consultar depois</p>
           <div className="bg-white border rounded-xl px-4 py-3 text-sm text-gray-600 font-mono break-all">

@@ -71,7 +71,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
       <div className="max-w-3xl w-full text-center space-y-10">
         <div className="space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-widest text-indigo-500">
+          <p className="text-sm font-semibold uppercase tracking-widest text-blue-500">
             Consciência &amp; Autoconhecimento
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">Conheça a si mesmo</h1>
@@ -91,7 +91,7 @@ export default function Home() {
               </div>
               <Link
                 href={t.href}
-                className="inline-block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+                className="inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
               >
                 {t.cta}
               </Link>
@@ -99,9 +99,23 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="text-sm text-gray-400">
-          Quanto mais você se conhece, melhores são suas escolhas e suas relações.
-        </p>
+        <a
+          href="https://falandosobrecorridaderua.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-2xl bg-blue-900 hover:bg-blue-950 text-white p-6 text-left transition-colors"
+        >
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-200">
+            Método 3C · Pilar 1: Consciência
+          </span>
+          <p className="text-lg font-bold mt-1">
+            Estes testes fazem parte do Método 3C de Arnaldo Palma
+          </p>
+          <p className="text-sm text-blue-100 mt-1">
+            Conheça o livro &ldquo;Falando Sobre Corrida de Rua&rdquo; — autoconhecimento,
+            congruência e consistência aplicados ao corpo e à carreira. →
+          </p>
+        </a>
       </div>
     </main>
   )

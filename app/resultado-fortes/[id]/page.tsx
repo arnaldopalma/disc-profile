@@ -53,7 +53,7 @@ export default async function ResultadoFortesPage({
             </div>
             <Link
               href="/pontos-fortes"
-              className="shrink-0 text-sm text-indigo-600 hover:underline font-medium"
+              className="shrink-0 text-sm text-blue-600 hover:underline font-medium"
             >
               Fazer novamente
             </Link>
@@ -135,14 +135,14 @@ export default async function ResultadoFortesPage({
         </div>
 
         {/* Share */}
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 text-center space-y-3">
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center space-y-3">
           <p className="font-semibold text-gray-800">Compartilhe seu resultado</p>
           <p className="text-sm text-gray-500">Guarde ou envie este link para consultar depois</p>
           <div className="bg-white border rounded-xl px-4 py-3 text-sm text-gray-600 font-mono break-all">
             {`https://disc-profile-sigma.vercel.app/resultado-fortes/${id}`}
           </div>
           <div>
-            <Link href="/" className="text-sm text-indigo-600 hover:underline font-medium">
+            <Link href="/" className="text-sm text-blue-600 hover:underline font-medium">
               ← Voltar para a página inicial
             </Link>
           </div>
