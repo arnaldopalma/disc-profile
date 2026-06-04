@@ -5,8 +5,8 @@ import './globals.css'
 const geist = Geist({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Perfil DISC',
-  description: 'Descubra seu perfil de personalidade DISC',
+  title: 'Consciência & Autoconhecimento',
+  description: 'Testes de autoconhecimento: Perfil DISC e Pontos Fortes',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
