@@ -129,6 +129,11 @@ export default function Home() {
         </a>
       </div>
       </main>
+      <footer className="text-center py-6">
+        <Link href="/dashboard" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+          Dashboard
+        </Link>
+      </footer>
     </div>
   )
 }

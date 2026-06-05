@@ -37,6 +37,9 @@ export default async function ResultadoScarfPage({
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-50">
       <div className="max-w-3xl mx-auto space-y-6">
+        <Link href="/dashboard" className="text-sm text-blue-600 hover:underline font-medium">
+          ← Voltar ao dashboard
+        </Link>
         {/* Header */}
         <div className="bg-white rounded-2xl border shadow-sm p-6">
           <div className="flex items-start justify-between gap-4">
