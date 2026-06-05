@@ -68,14 +68,25 @@ const TESTS: TestCard[] = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen flex flex-col">
+      <header className="flex justify-end px-4 sm:px-6 py-4">
+        <a
+          href="https://www.falandosobrecorridaderua.com.br/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors"
+        >
+          Livro →
+        </a>
+      </header>
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-16">
       <div className="max-w-3xl w-full text-center space-y-10">
         <div className="space-y-3">
           <p className="text-sm font-semibold uppercase tracking-widest text-blue-500">
             Consciência &amp; Autoconhecimento
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">Conheça a si mesmo</h1>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
+          <p className="text-gray-500 text-sm sm:text-base max-w-xl mx-auto">
             Quatro testes complementares para entender como você se comporta, onde estão seus
             talentos e o que mais te move. Não existe perfil bom ou ruim — só o seu.
           </p>
@@ -100,7 +111,7 @@ export default function Home() {
         </div>
 
         <a
-          href="https://falandosobrecorridaderua.vercel.app"
+          href="https://www.falandosobrecorridaderua.com.br/"
           target="_blank"
           rel="noopener noreferrer"
           className="block rounded-2xl bg-blue-900 hover:bg-blue-950 text-white p-6 text-left transition-colors"
@@ -117,6 +128,7 @@ export default function Home() {
           </p>
         </a>
       </div>
-    </main>
+      </main>
+    </div>
   )
 }
