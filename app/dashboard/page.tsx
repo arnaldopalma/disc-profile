@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   BarChart,
@@ -82,12 +82,11 @@ export default function DashboardPage() {
   const [filter, setFilter] = useState('')
   const [tab, setTab] = useState<Tab>('disc')
 
-  async function handleLogin(e: React.FormEvent) {
-    e.preventDefault()
+  async function runAuth(pw: string): Promise<void> {
     setLoading(true)
     setAuthError('')
     try {
-      const headers = { 'x-dashboard-password': password }
+      const headers = { 'x-dashboard-password': pw }
       const [discRes, strRes, scarfRes, tempRes] = await Promise.all([
         fetch('/api/results', { headers }),
         fetch('/api/strengths/results', { headers }),
@@ -96,6 +95,7 @@ export default function DashboardPage() {
       ])
       if (discRes.status === 401) {
         setAuthError('Senha incorreta.')
+        sessionStorage.removeItem('dashboard_pw')
         return
       }
       const discData = await discRes.json()
@@ -104,12 +104,34 @@ export default function DashboardPage() {
       if (scarfRes.ok) setScarf((await scarfRes.json()).results ?? [])
       if (tempRes.ok) setTemps((await tempRes.json()).results ?? [])
       setAuthenticated(true)
+      sessionStorage.setItem('dashboard_pw', pw)
     } catch {
       setAuthError('Erro ao conectar. Tente novamente.')
     } finally {
       setLoading(false)
     }
   }
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault()
+    await runAuth(password)
+  }
+
+  function logout() {
+    sessionStorage.removeItem('dashboard_pw')
+    setAuthenticated(false)
+    setPassword('')
+  }
+
+  // Reautentica sozinho ao voltar para o dashboard (login persiste na sessão)
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? sessionStorage.getItem('dashboard_pw') : null
+    if (saved) {
+      setPassword(saved)
+      runAuth(saved)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!authenticated) {
     return (
@@ -150,7 +172,10 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
             <p className="text-gray-500 text-sm">Consciência &amp; Autoconhecimento</p>
           </div>
-          <Link href="/" className="text-sm text-blue-600 hover:underline">← Home</Link>
+          <div className="flex items-center gap-4">
+            <button onClick={logout} className="text-sm text-gray-500 hover:text-gray-800">Sair</button>
+            <Link href="/" className="text-sm text-blue-600 hover:underline">← Home</Link>
+          </div>
         </div>
 
         {/* Tabs */}
